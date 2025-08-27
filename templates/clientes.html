@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}Clientes Cadastrados{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Clientes Cadastrados</h2>
+
+<form method="GET" action="{{ url_for('listar_clientes') }}" class="mb-4">
+  <div class="input-group">
+    <input type="text" name="busca" class="form-control" placeholder="Buscar por nome..." value="{{ request.args.get('busca', '') }}">
+    <button type="submit" class="btn btn-outline-primary">Buscar</button>
+    {% if request.args.get('busca') %}
+      <a href="{{ url_for('listar_clientes') }}" class="btn btn-outline-secondary">Limpar</a>
+    {% endif %}
+  </div>
+</form>
+
+{% if clientes %}
+  <table class="table table-hover table-bordered">
+    <thead class="table-dark">
+      <tr>
+        <th>Nome</th>
+        <th>Telefone</th>
+        <th>Email</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for cliente in clientes %}
+      <tr>
+        <td>
+          <a href="{{ url_for('ordens_por_cliente', cliente_id=cliente.id) }}" class="text-decoration-none">
+            {{ cliente.nome }}
+          </a>
+        </td>
+        <td>{{ cliente.telefone }}</td>
+        <td>{{ cliente.email }}</td>
+        <td class="d-flex gap-2">
+          <a href="{{ url_for('ordens_por_cliente', cliente_id=cliente.id) }}" class="btn btn-sm btn-outline-primary">Ver O.S.</a>
+          <a href="{{ url_for('editar_cliente', cliente_id=cliente.id) }}" class="btn btn-sm btn-outline-warning">Editar</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% else %}
+  <div class="alert alert-warning">Nenhum cliente encontrado.</div>
+{% endif %}
+
+<a href="{{ url_for('home') }}" class="btn btn-secondary mt-3">Voltar para Home</a>
+{% endblock %}
