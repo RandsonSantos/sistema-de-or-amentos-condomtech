@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Ordem de Serviço #{{ os.id }}</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+      color: #000;
+    }
+
+    .header {
+      border-bottom: 1px solid #000;
+      margin-bottom: 10px;
+      padding-bottom: 5px;
+    }
+
+    .empresa {
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    .contato {
+      font-size: 11px;
+      margin-top: 3px;
+    }
+
+    .section-title {
+      font-weight: bold;
+      margin-top: 15px;
+      margin-bottom: 5px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 5px;
+    }
+
+    th, td {
+      border: 1px solid #000;
+      padding: 4px;
+      font-size: 11px;
+    }
+
+    th {
+      background-color: #eee;
+    }
+
+    .totais {
+      margin-top: 10px;
+      width: 100%;
+    }
+
+    .totais td {
+      border: none;
+      padding: 4px;
+      font-size: 12px;
+    }
+
+    .right {
+      text-align: right;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <div class="empresa">{{ empresa.nome }}</div>
+    <div class="contato">
+      {{ empresa.endereco }}<br/>
+      Telefone: {{ empresa.telefone }} | Email: {{ empresa.email }}<br/>
+      CNPJ: {{ empresa.cnpj }} | Site: {{ empresa.site }}
+    </div>
+  </div>
+
+  <div class="section-title">Ordem de Serviço #{{ os.id }}</div>
+  <p><strong>Cliente:</strong> {{ os.cliente.nome }}<br/>
+     <strong>Telefone:</strong> {{ os.cliente.telefone }}<br/>
+     <strong>Email:</strong> {{ os.cliente.email }}<br/>
+     <strong>Data:</strong> {{ os.data_criacao.strftime('%d/%m/%Y') }}</p>
+
+  <div class="section-title">Itens da Ordem</div>
+  <table>
+    <thead>
+      <tr>
+        <th>Produto/Serviço</th>
+        <th>Descrição</th>
+        <th>Qtd</th>
+        <th>Unitário</th>
+        <th>Subtotal</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in os.itens_os %}
+      <tr>
+        <td>{{ item.produto.nome }}</td>
+        <td>{{ item.produto.descricao }}</td>
+        <td>{{ item.quantidade }}</td>
+        <td>R$ {{ '%.2f'|format(item.produto.preco) }}</td>
+        <td>R$ {{ '%.2f'|format(item.quantidade * item.produto.preco) }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <table class="totais">
+    <tr>
+      <td class="right"><strong>Subtotal:</strong> R$ {{ '%.2f'|format(subtotal) }}</td>
+    </tr>
+    <tr>
+      <td class="right"><strong>Desconto:</strong> R$ {{ '%.2f'|format(os.desconto or 0) }}</td>
+    </tr>
+    <tr>
+      <td class="right"><strong>Total:</strong> R$ {{ '%.2f'|format(total) }}</td>
+    </tr>
+  </table>
+
+</body>
+</html>

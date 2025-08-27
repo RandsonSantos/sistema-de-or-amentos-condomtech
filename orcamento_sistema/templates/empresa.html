@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}Dados da Empresa{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Informações da Empresa</h2>
+
+{% if empresa %}
+  <div class="card shadow-sm mb-4">
+    <div class="card-body">
+      <p><strong>Nome:</strong> {{ empresa.nome }}</p>
+      <p><strong>Endereço:</strong> {{ empresa.endereco }}</p>
+      <p><strong>Telefone:</strong> {{ empresa.telefone }}</p>
+      <p><strong>Email:</strong> {{ empresa.email }}</p>
+      <p><strong>CNPJ:</strong> {{ empresa.cnpj }}</p>
+      <p><strong>Site:</strong> {{ empresa.site }}</p>
+      <p><strong>Observações:</strong><br>{{ empresa.observacoes }}</p>
+    </div>
+  </div>
+
+  <a href="{{ url_for('editar_empresa') }}" class="btn btn-warning">Editar Dados</a>
+{% else %}
+  <div class="alert alert-warning">Nenhuma empresa cadastrada ainda.</div>
+  <a href="{{ url_for('editar_empresa') }}" class="btn btn-primary">Cadastrar Empresa</a>
+{% endif %}
+{% endblock %}

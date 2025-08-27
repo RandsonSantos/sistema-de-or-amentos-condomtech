@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}Início | Sistema de Orçamento{% endblock %}
+
+{% block content %}
+<h1 class="mb-4 text-center">Sistema de Orçamento </h1>
+
+<div class="row g-4">
+  <div class="col-md-6">
+    <div class="card shadow-sm h-100">
+      <div class="card-body">
+        <h5 class="card-title"><i class="bi bi-file-earmark-plus"></i> Nova Ordem de Serviço</h5>
+        <p class="card-text">Crie uma nova O.S. com cliente, produtos e observações.</p>
+        <a href="{{ url_for('nova_os') }}" class="btn btn-success">Criar O.S.</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6">
+    <div class="card shadow-sm h-100">
+      <div class="card-body">
+        <h5 class="card-title"><i class="bi bi-person-plus"></i> Cadastrar Cliente</h5>
+        <p class="card-text">Adicione um novo cliente ao sistema.</p>
+        <a href="{{ url_for('cadastrar_cliente') }}" class="btn btn-primary">Cadastrar Cliente</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6">
+    <div class="card shadow-sm h-100">
+      <div class="card-body">
+        <h5 class="card-title"><i class="bi bi-box-seam"></i> Cadastrar Produto/Serviço</h5>
+        <p class="card-text">Adicione produtos ou serviços com preço e descrição.</p>
+        <a href="{{ url_for('cadastrar_produto') }}" class="btn btn-warning">Cadastrar Produto</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6">
+    <div class="card shadow-sm h-100">
+      <div class="card-body">
+        <h5 class="card-title"><i class="bi bi-people"></i> Ver Clientes</h5>
+        <p class="card-text">Visualize todos os clientes cadastrados e suas ordens.</p>
+        <a href="{{ url_for('listar_clientes') }}" class="btn btn-outline-dark">Ver Clientes</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
