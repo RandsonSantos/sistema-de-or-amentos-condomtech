@@ -5,7 +5,7 @@ from io import BytesIO
 
 app = Flask(__name__)
 ##app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///orcamento.db'##
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://sistema_de_orcamentos_user:wOZ7KITrJfv5F0ZEAVk7jIZW0lUcoOX9@dpg-d2ni5ae3jp1c73cn2f30-a.oregon-postgres.render.com/sistema_de_orcamentos'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://sistema_de_orcamentos_user:wOZ7KITrJfv5F0ZEAVk7jIZW0lUcoOX9@dpg-d2ni5ae3jp1c73cn2f30-a/sistema_de_orcamentos'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
 
