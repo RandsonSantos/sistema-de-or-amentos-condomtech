@@ -5,68 +5,108 @@
   <title>Ordem de Serviço #{{ os.id }}</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Segoe UI', Tahoma, sans-serif;
       font-size: 12px;
-      color: #000;
+      color: #333;
+      margin: 20px;
     }
 
     .header {
-      border-bottom: 1px solid #000;
+      border-bottom: 2px solid #444;
+      padding-bottom: 10px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .logo {
+      height: 60px;
       margin-bottom: 10px;
-      padding-bottom: 5px;
     }
 
     .empresa {
-      font-size: 14px;
+      font-size: 16px;
       font-weight: bold;
+      color: #000;
+      margin-top: 5px;
     }
 
     .contato {
       font-size: 11px;
-      margin-top: 3px;
+      margin-top: 5px;
+      line-height: 1.4;
     }
 
     .section-title {
+      font-size: 13px;
       font-weight: bold;
-      margin-top: 15px;
-      margin-bottom: 5px;
+      margin-top: 25px;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      color: #222;
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
-      margin-top: 5px;
+      margin-top: 10px;
     }
 
     th, td {
-      border: 1px solid #000;
-      padding: 4px;
+      border: 1px solid #999;
+      padding: 6px;
       font-size: 11px;
     }
 
     th {
-      background-color: #eee;
+      background-color: #f2f2f2;
+      text-align: left;
     }
 
     .totais {
-      margin-top: 10px;
+      margin-top: 20px;
       width: 100%;
     }
 
     .totais td {
       border: none;
-      padding: 4px;
+      padding: 6px;
       font-size: 12px;
     }
 
     .right {
       text-align: right;
     }
+
+    .cliente-info {
+      line-height: 1.6;
+    }
+
+    .pagamento {
+      border: 1px solid #ccc;
+      padding: 8px;
+      margin-top: 15px;
+      font-size: 11px;
+    }
+
+    .assinatura {
+      margin-top: 30px;
+      font-size: 11px;
+    }
+
+    .footer {
+      margin-top: 40px;
+      font-size: 10px;
+      color: #555;
+      border-top: 1px solid #ccc;
+      padding-top: 10px;
+      text-align: center;
+    }
   </style>
 </head>
 <body>
 
   <div class="header">
+    <img src="{{ url_for('static', filename='logo1.png') }}" alt="Logo da empresa" class="logo">
     <div class="empresa">{{ empresa.nome }}</div>
     <div class="contato">
       {{ empresa.endereco }}<br/>
@@ -74,14 +114,18 @@
       CNPJ: {{ empresa.cnpj }} | Site: {{ empresa.site }}
     </div>
   </div>
+  <div class="section-title">Dados do Cliente</div>
+  <div class="info">
+    <strong>Cliente:</strong> {{ os.cliente.nome }} — 
+    <strong>Cidade:</strong> {{ os.cliente.cidade or '---' }} — 
+    <strong>Telefone:</strong> {{ os.cliente.telefone or '---' }}<br/>
+  
+    <strong>CPF/CNPJ:</strong> {{ os.cliente.cpf_cnpj or '---' }} — 
+    <strong>Email:</strong> {{ os.cliente.email or '---' }} — 
+  </div>
+  
 
-  <div class="section-title">Ordem de Serviço #{{ os.id }}</div>
-  <p><strong>Cliente:</strong> {{ os.cliente.nome }}<br/>
-     <strong>Telefone:</strong> {{ os.cliente.telefone }}<br/>
-     <strong>Email:</strong> {{ os.cliente.email }}<br/>
-     <strong>Data:</strong> {{ os.data_criacao.strftime('%d/%m/%Y') }}</p>
-
-  <div class="section-title">Itens da Ordem</div>
+  <div class="section-title">Orçamento de Produtos/ Serviço >> Nº#{{ os.id }}</div>
   <table>
     <thead>
       <tr>
@@ -116,6 +160,21 @@
       <td class="right"><strong>Total:</strong> R$ {{ '%.2f'|format(total) }}</td>
     </tr>
   </table>
+
+  <div class="section-title">Forma de Pagamento</div>
+  <div class="pagamento">
+    {{ os.forma_pagamento or 'Pix, boleto, cartão de crédito ou débito' }}
+  </div>
+
+  <div class="assinatura">
+    <p><strong>Assinatura do responsável:</strong> ____________________________________________</p>
+  </div>
+
+  <div class="footer">
+    <p>Este orçamento é válido por 15 dias a partir da data de emissão ({{ os.data_criacao.strftime('%d/%m/%Y') }}).</p>
+    <p>Após esse período, os valores podem sofrer alterações conforme tabela vigente.</p>
+    
+  </div>
 
 </body>
 </html>
