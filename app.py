@@ -481,26 +481,31 @@ from datetime import datetime
 @app.route('/dashboard')
 @login_required
 def dashboard():
-    # Dados principais
     total_os = OrdemServico.query.count()
     total_clientes = Cliente.query.count()
 
-    valor_total = db.session.query(
-        db.func.sum(ItemOS.quantidade * Produto.preco)
-    ).join(Produto).join(OrdemServico).scalar() or 0
+    valor_total = sum(os.total for os in OrdemServico.query.all())
+    valor_pago = sum(os.total for os in OrdemServico.query.filter_by(status='Pago').all())
+    valor_cancelado = sum(os.total for os in OrdemServico.query.filter_by(status='Cancelado').all())
+    valor_aberto = sum(os.total for os in OrdemServico.query.filter_by(status='Aberta').all())
 
-    # Filtro: últimas 10 O.S. do mês atual
     hoje = datetime.today()
     inicio_mes = datetime(hoje.year, hoje.month, 1)
     ultimas_ordens = OrdemServico.query.filter(
         OrdemServico.data_criacao >= inicio_mes
     ).order_by(OrdemServico.data_criacao.desc()).limit(10).all()
 
-    return render_template('dashboard.html',
-                           total_os=total_os,
-                           total_clientes=total_clientes,
-                           valor_total=valor_total,
-                           ultimas_ordens=ultimas_ordens)
+    return render_template(
+        'dashboard.html',
+        total_os=total_os,
+        total_clientes=total_clientes,
+        valor_total=valor_total,
+        valor_pago=valor_pago,
+        valor_cancelado=valor_cancelado,
+        valor_aberto=valor_aberto,
+        ultimas_ordens=ultimas_ordens
+    )
+
 
 @app.route('/ordens')
 @login_required
