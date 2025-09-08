@@ -5,29 +5,52 @@
 <h2 class="mb-4">Painel de Controle</h2>
 
 <div class="row text-center mb-4">
-  <div class="col-md-4">
+  <div class="col-md-3">
     <div class="card shadow-sm">
       <div class="card-body">
-        <h5>Total de O.S.</h5>
-        <h3>{{ total_os }}</h3>
+        <h6>Total de O.S.</h6>
+        <h4>{{ total_os }}</h4>
       </div>
     </div>
   </div>
-  <div class="col-md-4">
+  <div class="col-md-3">
     <div class="card shadow-sm">
       <div class="card-body">
-        <h5>Clientes</h5>
-        <h3>{{ total_clientes }}</h3>
+        <h6>Clientes</h6>
+        <h4>{{ total_clientes }}</h4>
       </div>
     </div>
   </div>
-  <div class="col-md-4">
+  <div class="col-md-3">
     <div class="card shadow-sm">
       <div class="card-body">
-        <h5>Valor Total</h5>
-        <h3>R$ {{ '%.2f'|format(valor_total) }}</h3>
+        <h6>Valor Total</h6>
+        <h4>R$ {{ '%.2f'|format(valor_total) }}</h4>
       </div>
     </div>
+  </div>
+</div>
+
+<div class="row text-center mb-4">
+  <div class="col-md-4">
+    <a href="{{ url_for('listar_ordens_por_status', status='Aberta') }}" class="text-decoration-none text-dark">
+      <div class="card border-success shadow-sm">
+        <div class="card-body">
+          <h6>Ordens Abertas</h6>
+          <h4>R$ {{ '%.2f'|format(valor_aberto) }}</h4>
+        </div>
+      </div>
+    </a>
+  </div>
+  <div class="col-md-4">
+    <a href="{{ url_for('listar_ordens_por_status', status='Pago') }}" class="text-decoration-none text-dark">
+      <div class="card border-primary shadow-sm">
+        <div class="card-body">
+          <h6>Ordens Pagas</h6>
+          <h4>R$ {{ '%.2f'|format(valor_pago) }}</h4>
+        </div>
+      </div>
+    </a>
   </div>
 </div>
 
